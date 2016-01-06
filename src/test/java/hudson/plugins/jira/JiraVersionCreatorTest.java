@@ -32,6 +32,7 @@ public class JiraVersionCreatorTest {
     AbstractBuild build;
     Launcher launcher;
     BuildListener listener;
+    PrintStream logger;
     EnvVars env;
     AbstractProject project;
     JiraSite site;
@@ -46,6 +47,7 @@ public class JiraVersionCreatorTest {
         project = mock(AbstractProject.class);
         site = mock(JiraSite.class);
         jvc = spy(new JiraVersionCreator(JIRA_VER, JIRA_PRJ));
+        logger = mock(PrintStream.class);
 
         doReturn(site).when(jvc).getSiteForProject((AbstractProject<?, ?>) Mockito.any());
 
@@ -64,6 +66,7 @@ public class JiraVersionCreatorTest {
                    return expanded;
             }
         });
+        when(listener.getLogger()).thenReturn(logger);
     }
 
     @Test
